@@ -1,0 +1,77 @@
+#برنامه انتخاب گر رشته نظری
+#ساخته شده توسط محمود حسینی
+#این برنامه هر سال بروز رسانی میشود
+def get_score(subject):
+    print(f"\n--- {subject} ---")
+    grade7 = float(input(f"{subject} هفتم: "))
+    grade8 = float(input(f"{subject} هشتم: "))
+    grade9 = float(input(f"{subject} نهم: "))
+
+    result = (grade7 + grade8 + (grade9 * 3)) / 5
+    return result
+
+
+rules = {
+    "1": {
+        "name": "ریاضی‌فیزیک",
+        "subjects": [("علوم", 13), ("ریاضی", 14)]
+    },
+    "2": {
+        "name": "علوم تجربی",
+        "subjects": [("علوم", 14), ("ریاضی", 13)]
+    },
+    "3": {
+        "name": "معارف اسلامی",
+        "subjects": [
+            ("زبان و ادبیات فارسی", 14),
+            ("پیام‌های آسمان", 14),
+            ("زبان عربی", 14)
+        ]
+    },
+    "4": {
+        "name": "علوم انسانی",
+        "subjects": [
+            ("زبان و ادبیات فارسی", 14),
+            ("مطالعات اجتماعی", 13),
+            ("زبان عربی", 12)
+        ]
+    }
+}
+
+print("===== بررسی شرایط انتخاب رشته =====")
+print("1. ریاضی‌فیزیک")
+print("2. علوم تجربی")
+print("3. معارف اسلامی")
+print("4. علوم انسانی")
+
+choice = input("\nرشته مورد نظر را انتخاب کنید: ")
+
+if choice not in rules:
+    print("انتخاب نامعتبر است.")
+else:
+    field = rules[choice]
+
+    print(f"\nرشته انتخابی: {field['name']}")
+    print("فرمول: (هفتم + هشتم + نهم × 3) ÷ 5")
+
+    all_passed = True
+
+    for subject, minimum in field["subjects"]:
+        score = get_score(subject)
+
+        if score >= minimum:
+            status = "قبول"
+            symbol = "✓"
+        else:
+            status = "رد"
+            symbol = "✗"
+            all_passed = False
+
+        print(f"نتیجه {subject}: {score:.2f} | حدنصاب: {minimum} | {symbol} {status}")
+
+    print("\n==============================")
+    if all_passed:
+        print(f"✓ شرایط اولیه رشته {field['name']} را داری.")
+    else:
+        print(f"✗ شرایط اولیه رشته {field['name']} را نداری.")
+    print("==============================")
